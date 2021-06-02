@@ -1,0 +1,3 @@
+#!/Users/yoon/workspaces/poie/rest-api/venv/bin/python
+from numba.pycc import main
+main()
