@@ -16,15 +16,23 @@ class PoieService:
 
         try:
             prediction = self.model.predict(target)
-            print("예측")
-            print(str(prediction))
-            predict_class = np.argmax(prediction[0])
-            print(str(prediction[0]))
+            prediction = prediction[0]
+            predict_class = np.argmax(prediction)
+
+            np.set_printoptions(precision=6, suppress=True)
+
+            confidence = prediction[predict_class]
+            confidence = round(confidence, 2)
+            print("정확도 : " + str(confidence))
+            confidence = confidence * 100
+            if confidence < 95:
+                predict_class = 10  # 정확도가 낮으면 미분류
 
             result = {
                 "id": int(predict_class),
                 "sound_name": sound_names[predict_class],
-                "link": "haha"
+                "confidence": int(confidence),
+                "link": "http://localhost:8080/docs/"
             }
 
             # 결과 저장
